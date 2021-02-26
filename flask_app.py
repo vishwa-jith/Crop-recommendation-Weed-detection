@@ -7,8 +7,7 @@ from datetime import datetime, timedelta
 from functools import wraps
 
 app = Flask(__name__)
-
-app.config['SECRET_KEY'] = '1234567890'
+app.config['SECRET_KEY'] = '0123456789'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///Database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 db = SQLAlchemy(app)
@@ -26,19 +25,24 @@ def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
         token = None
-        if 'x-access-token' in request.headers:
-            token = request.headers['x-access-token']
+        if 'Authorization' in request.headers:
+            token = request.headers['Authorization'].split(" ")[1]
         if not token:
             return jsonify({'message': 'Token is missing !!'}), 401
+
         try:
             data = jwt.decode(token, app.config['SECRET_KEY'])
+            print(data)
             current_user = User.query.filter_by(
                 public_id=data['public_id']).first()
         except:
+            data = jwt.decode(token, app.config['SECRET_KEY'])
+            print(data)
             return jsonify({
                 'message': 'Token is invalid !!'
             }), 401
         return f(current_user, *args, **kwargs)
+
     return decorated
 
 
@@ -53,12 +57,13 @@ def get_all_users(current_user):
             'name': user.name,
             'email': user.email
         })
+
     return jsonify({'users': output})
 
 
 @app.route('/login', methods=['POST'])
 def login():
-    auth = request.form
+    auth = request.json
 
     if not auth or not auth.get('email') or not auth.get('password'):
         return make_response(
@@ -82,7 +87,7 @@ def login():
             'exp': datetime.utcnow() + timedelta(minutes=30)
         }, app.config['SECRET_KEY'])
 
-        return make_response(jsonify({'token': token.decode('UTF-8')}), 201)
+        return make_response(jsonify({'token': token.decode("UTF-8")}), 201)
     return make_response(
         'Could not verify',
         403,
@@ -92,7 +97,7 @@ def login():
 
 @app.route('/signup', methods=['POST'])
 def signup():
-    data = request.form
+    data = request.json
 
     name, email = data.get('name'), data.get('email')
     password = data.get('password')
