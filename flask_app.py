@@ -57,7 +57,6 @@ def get_all_users(current_user):
             'name': user.name,
             'email': user.email
         })
-
     return jsonify({'users': output})
 
 
