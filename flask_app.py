@@ -16,8 +16,7 @@ db = SQLAlchemy(app)
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     public_id = db.Column(db.String(50), unique=True)
-    name = db.Column(db.String(100))
-    email = db.Column(db.String(70), unique=True)
+    username = db.Column(db.String(80), unique=True)
     password = db.Column(db.String(80))
 
 
@@ -54,8 +53,7 @@ def get_all_users(current_user):
     for user in users:
         output.append({
             'public_id': user.public_id,
-            'name': user.name,
-            'email': user.email
+            'username': user.username,
         })
     return jsonify({'users': output})
 
@@ -64,14 +62,14 @@ def get_all_users(current_user):
 def login():
     auth = request.json
 
-    if not auth or not auth.get('email') or not auth.get('password'):
+    if not auth or not auth.get('username') or not auth.get('password'):
         return make_response(
             'Could not verify',
             401,
             {'WWW-Authenticate': 'Basic realm ="Login required !!"'}
         )
 
-    user = User.query.filter_by(email=auth.get('email')).first()
+    user = User.query.filter_by(username=auth.get('username')).first()
 
     if not user:
         return make_response(
@@ -98,15 +96,14 @@ def login():
 def signup():
     data = request.json
 
-    name, email = data.get('name'), data.get('email')
+    username = data.get('username')
     password = data.get('password')
 
-    user = User.query.filter_by(email=email).first()
+    user = User.query.filter_by(username=username).first()
     if not user:
         user = User(
             public_id=str(uuid.uuid4()),
-            name=name,
-            email=email,
+            username=username,
             password=generate_password_hash(password)
         )
         db.session.add(user)
