@@ -1,5 +1,6 @@
 import requests
 import pandas as pd
+import numpy as np
 
 
 def getWeather(district):
@@ -8,4 +9,7 @@ def getWeather(district):
     res = pd.DataFrame.from_records(response)
     forecast = res['forecastday':'name']
     f = pd.DataFrame.from_records(forecast['forecast']['forecastday'])
-    return {"temperature": f.avgtemp_c, "humidity": f.avghumidity, "rainfall": f.totalprecip_mm}
+    weather = pd.DataFrame.from_records(f["day"])
+    weather_input = np.array(
+        [weather.avgtemp_c, weather.avghumidity, 100*weather.totalprecip_mm+100])[0].reshape(1, -1)
+    return weather_input

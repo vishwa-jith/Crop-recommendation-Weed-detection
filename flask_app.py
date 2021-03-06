@@ -5,6 +5,10 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import jwt
 from datetime import datetime, timedelta
 from functools import wraps
+import numpy as np
+
+from api import weatherApi
+from utils import utils
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '0123456789'
@@ -112,6 +116,15 @@ def signup():
         return make_response('Successfully registered.', 201)
     else:
         return make_response('User already exists. Please Log in.', 202)
+
+
+@app.route("/recommendCrop")
+def recommendCrop():
+    weather = weatherApi.getWeather("Bangalore")
+    cropRecommendationApproach1 = utils.loadpickles(
+        "pickledFiles/cropRecommendationA1.pkl")
+    crop = cropRecommendationApproach1.predict(weather)
+    return jsonify({"crop": crop[0]})
 
 
 if __name__ == "__main__":
