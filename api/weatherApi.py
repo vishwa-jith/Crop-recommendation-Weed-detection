@@ -10,6 +10,6 @@ def getWeather(district):
     forecast = res['forecastday':'name']
     f = pd.DataFrame.from_records(forecast['forecast']['forecastday'])
     weather = pd.DataFrame.from_records(f["day"])
-    weather_input = np.array(
-        [weather.avgtemp_c, weather.avghumidity, 100*weather.totalprecip_mm+100])[0].reshape(1, -1)
+    weather_input = [weather.avgtemp_c[0],
+                     weather.avghumidity[0], 100*weather.totalprecip_mm[0]+100]
     return weather_input

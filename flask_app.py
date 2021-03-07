@@ -118,12 +118,33 @@ def signup():
         return make_response('User already exists. Please Log in.', 202)
 
 
-@app.route("/recommendCrop")
-def recommendCrop():
-    weather = weatherApi.getWeather("Bangalore")
+@app.route("/A1/recommendCrop", methods=['GET'])
+def recommendCrop1():
+    district = request.args.get("district")
+    weather = np.array(weatherApi.getWeather(
+        district if district else "Bangalore")).reshape(1, -1)
     cropRecommendationApproach1 = utils.loadpickles(
         "pickledFiles/cropRecommendationA1.pkl")
     crop = cropRecommendationApproach1.predict(weather)
+    print(district)
+    return jsonify({"crop": crop[0]})
+
+
+@app.route("/A2/recommendCrop", methods=['POST'])
+def recommendCrop2():
+    data = request.json
+
+    nitrogen = data.get('nitrogen')
+    phosphorus = data.get('phosphorus')
+    potassium = data.get('potassium')
+
+    district = request.args.get("district")
+    weather = weatherApi.getWeather(district if district else "Bangalore")
+    cropRecommendationApproach2 = utils.loadpickles(
+        "pickledFiles/cropRecommendationA2.pkl")
+    crop_input = np.array(
+        [nitrogen, phosphorus, potassium, *weather]).reshape(1, -1)
+    crop = cropRecommendationApproach2.predict(crop_input)
     return jsonify({"crop": crop[0]})
 
 
