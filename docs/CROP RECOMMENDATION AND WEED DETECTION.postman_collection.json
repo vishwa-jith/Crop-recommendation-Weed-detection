@@ -23,7 +23,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\":\"Vishwajith V\",\r\n    \"email\":\"vishwajith567@gmail.com\",\r\n    \"password\":\"vishwa@2001\"\r\n}",
+					"raw": "{\r\n    \"username\":\"Vishwajith V\",\r\n    \"password\":\"vishwa@2001\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -76,7 +76,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"email\": \"vishwajith567@gmail.com\",\r\n    \"password\": \"vishwa@2001\"\r\n}",
+					"raw": "{\r\n    \"username\":\"Vishwajith V\",\r\n    \"password\":\"vishwa@2001\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -90,6 +90,163 @@
 					],
 					"path": [
 						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Recommend Crop A1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/A1/recommendCrop?district=Chennai",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"A1",
+						"recommendCrop"
+					],
+					"query": [
+						{
+							"key": "district",
+							"value": "Chennai"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Recommend Crop A2",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nitrogen\": 53,\r\n    \"phosphorus\": 67,\r\n    \"potassium\": 17\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/A2/recommendCrop?district=Chennai",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"A2",
+						"recommendCrop"
+					],
+					"query": [
+						{
+							"key": "district",
+							"value": "Chennai"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Recommend NPK A1",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"crop\": \"blackgram\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/A1/recommendNPK?district=Chennai",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"A1",
+						"recommendNPK"
+					],
+					"query": [
+						{
+							"key": "district",
+							"value": "Chennai"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Recommend Crop Yield",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"crop\": \"Arecanut\",\r\n    \"area\": 5\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/recommendCropYield?state=Andaman and Nicobar Islands&district=NICOBARS&season=Kharif",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"recommendCropYield"
+					],
+					"query": [
+						{
+							"key": "state",
+							"value": "Andaman and Nicobar Islands"
+						},
+						{
+							"key": "district",
+							"value": "NICOBARS"
+						},
+						{
+							"key": "season",
+							"value": "Kharif"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Recommend Fertilizer",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"soil\": \"Red\",\r\n    \"crop\": \"Ground Nuts\",\r\n    \"nitrogen\": 34,\r\n    \"potassium\": 21,\r\n    \"phosphorus\": 54\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/A1/recommendFertilizer",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"A1",
+						"recommendFertilizer"
 					]
 				}
 			},
@@ -133,7 +290,7 @@
 		},
 		{
 			"key": "access_token",
-			"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwdWJsaWNfaWQiOiJkMWY4YzllNy03NzhjLTQzNzItODRhYi00MjQ0YWY1M2QyYTgiLCJleHAiOjE2MTQzMjA5MzV9.eXaXyKNzurTbv6Lk35dwnFCT14KfTwsRC5uxrcBbwa4"
+			"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwdWJsaWNfaWQiOiJkMWY4YzllNy03NzhjLTQzNzItODRhYi00MjQ0YWY1M2QyYTgiLCJleHAiOjE2MTQzNTg5NjN9.mCYoZvU4biCDLYTBxb83mApxZM9xjSuukNoIFOmOnhk"
 		}
 	]
 }
