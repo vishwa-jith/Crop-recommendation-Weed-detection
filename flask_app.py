@@ -7,7 +7,6 @@ from datetime import datetime, timedelta
 from functools import wraps
 import numpy as np
 import pandas as pd
-from sklearn.preprocessing import StandardScaler
 
 
 from api import weatherApi
@@ -124,8 +123,7 @@ def signup():
 @app.route("/A1/recommendCrop", methods=['GET'])
 def recommendCrop1():
     district = request.args.get("district")
-    weather = np.array(weatherApi.getWeather(
-        district if district else "Bangalore")).reshape(1, -1)
+    weather = np.array(weatherApi.getWeather(district)).reshape(1, -1)
     cropRecommendationApproach1 = utils.loadpickles(
         "pickledFiles/cropRecommendationA1.pkl")
     crop = cropRecommendationApproach1.predict(weather)
@@ -136,6 +134,8 @@ def recommendCrop1():
 def recommendNPK():
     NPKPrediction = pd.read_csv(
         "./preprocessedData/CropRecommentationApproach2.csv")
+    NPKPrediction = NPKPrediction[NPKPrediction['N'] > 0 &
+                                  NPKPrediction['P'] & NPKPrediction['K']].reset_index(drop=True)
     category = list(dict(
         enumerate(NPKPrediction['label'].astype('category').cat.categories)).values())
 
@@ -143,12 +143,12 @@ def recommendNPK():
     crop = category.index(data.get("crop"))
 
     district = request.args.get("district")
-    weather = weatherApi.getWeather(district if district else "Bangalore")
+    weather = weatherApi.getWeather(district)
     nitrogen = utils.loadpickles(
         "pickledFiles/predictNitrogen.pkl")
     nitrogen_input = np.array([*weather, crop]).reshape(1, -1)
     nitrogen_level = nitrogen.predict(nitrogen_input)
-
+    print(nitrogen_input)
     phosphorus = utils.loadpickles(
         "pickledFiles/predictPhosphorus.pkl")
     phosphorus_input = np.array([*weather, crop]).reshape(1, -1)
@@ -182,7 +182,7 @@ def recommendFertilizer():
     phosphorus = data.get('phosphorus')
 
     district = request.args.get("district")
-    weather = weatherApi.getWeather(district if district else "Bangalore")[:2]
+    weather = weatherApi.getWeather(district)[:2]
     fertilizerRecommendation = utils.loadpickles(
         "pickledFiles/fertilizerRecommendation.pkl")
     fertilizer_input = np.array(
@@ -201,7 +201,7 @@ def recommendCrop2():
     potassium = data.get('potassium')
 
     district = request.args.get("district")
-    weather = weatherApi.getWeather(district if district else "Bangalore")
+    weather = weatherApi.getWeather(district)
     cropRecommendationApproach2 = utils.loadpickles(
         "pickledFiles/cropRecommendationA2.pkl")
     crop_input = np.array(
@@ -217,7 +217,10 @@ def recommendCropYield():
     area = data.get('area')
 
     CropProduction = pd.read_csv(
-        "./data/CropProduction.csv")
+        "./data/CropProductionMinified.csv")
+    CropProduction = CropProduction[CropProduction['Production'] > 0].reset_index(
+        drop=True)
+
     crop_category = list(dict(
         enumerate(CropProduction['Crop'].astype('category').cat.categories)).values())
     crop = crop_category.index(crop)
@@ -249,6 +252,63 @@ def recommendCropYield():
     yield_input_scaler = cropProductionScaler.transform(yield_input)
     crop_yield = cropProduction.predict(yield_input_scaler)
     return jsonify({"yield": crop_yield[0]})
+
+
+@app.route("/states", methods=['GET'])
+def getStates():
+    CropProduction = pd.read_csv(
+        "./data/CropProductionMinified.csv")
+    CropProduction = CropProduction[CropProduction['Production'] > 0].reset_index(
+        drop=True)
+
+    state_category = dict(
+        enumerate(CropProduction['State_Name'].astype('category').cat.categories))
+    return jsonify(state_category)
+
+
+@app.route("/districts", methods=['GET'])
+def getDistricts():
+    CropProduction = pd.read_csv(
+        "./data/CropProductionMinified.csv")
+    CropProduction = CropProduction[CropProduction['Production'] > 0].reset_index(
+        drop=True)
+
+    district_category = dict(
+        enumerate(CropProduction['District_Name'].astype('category').cat.categories))
+    return jsonify(district_category)
+
+
+@app.route("/crops", methods=['GET'])
+def getCrops():
+    CropProduction = pd.read_csv(
+        "./data/CropProductionMinified.csv")
+    CropProduction = CropProduction[CropProduction['Production'] > 0].reset_index(
+        drop=True)
+
+    crops_category = dict(
+        enumerate(CropProduction['Crop'].astype('category').cat.categories))
+    return jsonify(crops_category)
+
+
+@app.route("/seasons", methods=['GET'])
+def getSeasons():
+    CropProduction = pd.read_csv(
+        "./data/CropProductionMinified.csv")
+    CropProduction = CropProduction[CropProduction['Production'] > 0].reset_index(
+        drop=True)
+
+    season_category = dict(
+        enumerate(CropProduction['Season'].astype('category').cat.categories))
+    return jsonify(season_category)
+
+
+@app.route("/soils", methods=['GET'])
+def getSoils():
+    FertilizerPrediction = pd.read_csv(
+        "./data/FertilizerPrediction.csv")
+    soil_category = dict(
+        enumerate(FertilizerPrediction['Soil Type'].astype('category').cat.categories))
+    return jsonify(soil_category)
 
 
 if __name__ == "__main__":

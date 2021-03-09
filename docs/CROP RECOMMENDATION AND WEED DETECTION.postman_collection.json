@@ -159,7 +159,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"crop\": \"blackgram\"\r\n}",
+					"raw": "{\r\n    \"crop\": \"rice\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -192,7 +192,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"crop\": \"Arecanut\",\r\n    \"area\": 5\r\n}",
+					"raw": "{\r\n    \"crop\": \"Rice\",\r\n    \"area\": 102\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -232,7 +232,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"soil\": \"Red\",\r\n    \"crop\": \"Ground Nuts\",\r\n    \"nitrogen\": 34,\r\n    \"potassium\": 21,\r\n    \"phosphorus\": 54\r\n}",
+					"raw": "{\r\n    \"soil\": \"Sandy\",\r\n    \"crop\": \"Maize\",\r\n    \"nitrogen\": 37,\r\n    \"potassium\": 0,\r\n    \"phosphorus\": 0\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -240,13 +240,104 @@
 					}
 				},
 				"url": {
-					"raw": "{{BASE_URL}}/A1/recommendFertilizer",
+					"raw": "{{BASE_URL}}/A1/recommendFertilizer?district=Chennai",
 					"host": [
 						"{{BASE_URL}}"
 					],
 					"path": [
 						"A1",
 						"recommendFertilizer"
+					],
+					"query": [
+						{
+							"key": "district",
+							"value": "Chennai"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get States",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/states",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"states"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Districts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/districts",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"districts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Crops",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/crops",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"crops"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Soils",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/soils",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"soils"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Seasons",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/seasons",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"seasons"
 					]
 				}
 			},
