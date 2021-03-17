@@ -60,7 +60,8 @@ def token_required(f):
 @app.route('/user', methods=['GET'])
 @token_required
 def getUserProfile(current_user):
-    return jsonify({**current_user})
+    print(current_user.username)
+    return jsonify({"username":current_user.username,"full_name":current_user.full_name,"state_name":current_user.state_name,"district_name":current_user.district_name,"area":current_user.area,"soil_type":current_user.soil_type})
 
 
 @app.route('/login', methods=['POST'])
