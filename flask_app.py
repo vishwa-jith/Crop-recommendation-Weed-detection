@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify, make_response
 from flask_sqlalchemy import SQLAlchemy
 import uuid
+from numpy.core.numeric import full
 from werkzeug.security import generate_password_hash, check_password_hash
 import jwt
 from datetime import datetime, timedelta
@@ -24,6 +25,11 @@ class User(db.Model):
     public_id = db.Column(db.String(50), unique=True)
     username = db.Column(db.String(80), unique=True)
     password = db.Column(db.String(80))
+    full_name = db.Column(db.String(80))
+    state_name = db.Column(db.String(50))
+    district_name = db.Column(db.String(50))
+    area = db.Column(db.Integer)
+    soil_type = db.Column(db.String(60))
 
 
 def token_required(f):
@@ -33,7 +39,7 @@ def token_required(f):
         if 'Authorization' in request.headers:
             token = request.headers['Authorization'].split(" ")[1]
         if not token:
-            return jsonify({'message': 'Token is missing !!'}), 401
+            return jsonify({'message': 'Token is missing'}), 401
 
         try:
             data = jwt.decode(token, app.config['SECRET_KEY'])
@@ -44,7 +50,7 @@ def token_required(f):
             data = jwt.decode(token, app.config['SECRET_KEY'])
             print(data)
             return jsonify({
-                'message': 'Token is invalid !!'
+                'message': 'Token is invalid'
             }), 401
         return f(current_user, *args, **kwargs)
 
@@ -53,15 +59,8 @@ def token_required(f):
 
 @app.route('/user', methods=['GET'])
 @token_required
-def get_all_users(current_user):
-    users = User.query.all()
-    output = []
-    for user in users:
-        output.append({
-            'public_id': user.public_id,
-            'username': user.username,
-        })
-    return jsonify({'users': output})
+def getUserProfile(current_user):
+    return jsonify({**current_user})
 
 
 @app.route('/login', methods=['POST'])
@@ -70,16 +69,16 @@ def login():
 
     if not auth or not auth.get('username') or not auth.get('password'):
         return make_response(
-            'Could not verify',
+            jsonify({"message": "Could not verify"}),
             401,
-            {'WWW-Authenticate': 'Basic realm ="Login required !!"'}
+            {'WWW-Authenticate': 'Basic realm ="Login required"'}
         )
 
     user = User.query.filter_by(username=auth.get('username')).first()
 
     if not user:
         return make_response(
-            'Could not verify',
+            jsonify({"message": "Username doesn't exist"}),
             401,
             {'WWW-Authenticate': 'Basic realm ="User does not exist !!"'}
         )
@@ -90,9 +89,9 @@ def login():
             'exp': datetime.utcnow() + timedelta(minutes=30)
         }, app.config['SECRET_KEY'])
 
-        return make_response(jsonify({'token': token.decode("UTF-8")}), 201)
+        return make_response(jsonify({"message": "Login Sucessful", 'token': token.decode("UTF-8")}), 201)
     return make_response(
-        'Could not verify',
+        jsonify({"message": "Login Failed"}),
         403,
         {'WWW-Authenticate': 'Basic realm ="Wrong Password !!"'}
     )
@@ -104,20 +103,22 @@ def signup():
 
     username = data.get('username')
     password = data.get('password')
+    full_name = data.get('full_name')
 
     user = User.query.filter_by(username=username).first()
     if not user:
         user = User(
             public_id=str(uuid.uuid4()),
             username=username,
-            password=generate_password_hash(password)
+            password=generate_password_hash(password),
+            full_name=full_name
         )
         db.session.add(user)
         db.session.commit()
 
-        return make_response('Successfully registered.', 201)
+        return make_response(jsonify({"message": "Sucessfully Registered"}), 201)
     else:
-        return make_response('User already exists. Please Log in.', 202)
+        return make_response(jsonify({"message": 'User already exists. Please Log in'}), 202)
 
 
 @app.route("/A1/recommendCrop", methods=['GET'])
