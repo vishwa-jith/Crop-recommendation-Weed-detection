@@ -8,6 +8,7 @@ from datetime import datetime, timedelta
 from functools import wraps
 import numpy as np
 import pandas as pd
+from flask_cors import CORS,cross_origin
 
 
 from api import weatherApi
@@ -18,7 +19,7 @@ app.config['SECRET_KEY'] = '0123456789'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///Database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 db = SQLAlchemy(app)
-
+CORS(app,support_credentials=True)
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -38,6 +39,7 @@ def token_required(f):
         token = None
         if 'Authorization' in request.headers:
             token = request.headers['Authorization'].split(" ")[1]
+            print(token)
         if not token:
             return jsonify({'message': 'Token is missing'}), 401
 
@@ -60,8 +62,7 @@ def token_required(f):
 @app.route('/user', methods=['GET'])
 @token_required
 def getUserProfile(current_user):
-    print(current_user.username)
-    return jsonify({"username":current_user.username,"full_name":current_user.full_name,"state_name":current_user.state_name,"district_name":current_user.district_name,"area":current_user.area,"soil_type":current_user.soil_type})
+    return jsonify({"username":current_user.username,"password": current_user.password,"full_name":current_user.full_name,"state_name":current_user.state_name,"district_name":current_user.district_name,"area":current_user.area,"soil_type":current_user.soil_type})
 
 
 @app.route('/login', methods=['POST'])
@@ -257,7 +258,8 @@ def recommendCropYield():
 
 
 @app.route("/states", methods=['GET'])
-def getStates():
+@token_required
+def getStates(current_user):
     CropProduction = pd.read_csv(
         "./data/CropProductionMinified.csv")
     CropProduction = CropProduction[CropProduction['Production'] > 0].reset_index(
@@ -269,7 +271,8 @@ def getStates():
 
 
 @app.route("/districts", methods=['GET'])
-def getDistricts():
+@token_required
+def getDistricts(current_user):
     CropProduction = pd.read_csv(
         "./data/CropProductionMinified.csv")
     CropProduction = CropProduction[CropProduction['Production'] > 0].reset_index(
@@ -305,7 +308,8 @@ def getSeasons():
 
 
 @app.route("/soils", methods=['GET'])
-def getSoils():
+@token_required
+def getSoils(current_user):
     FertilizerPrediction = pd.read_csv(
         "./data/FertilizerPrediction.csv")
     soil_category = dict(
