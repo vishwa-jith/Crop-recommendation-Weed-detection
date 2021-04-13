@@ -8,7 +8,7 @@ from datetime import datetime, timedelta
 from functools import wraps
 import numpy as np
 import pandas as pd
-from flask_cors import CORS,cross_origin
+from flask_cors import CORS, cross_origin
 
 
 from api import weatherApi
@@ -19,7 +19,8 @@ app.config['SECRET_KEY'] = '0123456789'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///Database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 db = SQLAlchemy(app)
-CORS(app,support_credentials=True)
+CORS(app, support_credentials=True)
+
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -62,7 +63,29 @@ def token_required(f):
 @app.route('/user', methods=['GET'])
 @token_required
 def getUserProfile(current_user):
-    return jsonify({"username":current_user.username,"password": current_user.password,"full_name":current_user.full_name,"state_name":current_user.state_name,"district_name":current_user.district_name,"area":current_user.area,"soil_type":current_user.soil_type})
+    return jsonify({"username": current_user.username, "password": current_user.password, "full_name": current_user.full_name, "state_name": current_user.state_name, "district_name": current_user.district_name, "area": current_user.area, "soil_type": current_user.soil_type})
+
+
+@app.route('/user/update', methods=['PUT'])
+@token_required
+def updateUserProfile(current_user):
+    updateUser = request.json
+    user = User.query.filter_by(id=current_user.id).first()
+    userUsername = User.query.filter_by(
+        username=updateUser.get('username')).first()
+    if current_user.username != updateUser.get('username'):
+        if not userUsername:
+            user.username = updateUser.get('username')
+        else:
+            return jsonify({"message": "Username already taken."})
+    user.password = updateUser.get('password')
+    user.full_name = updateUser.get('full_name')
+    user.state_name = updateUser.get('state_name')
+    user.district_name = updateUser.get('district_name')
+    user.area = updateUser.get('area')
+    user.soil_type = updateUser.get('soil_type')
+    db.session.commit()
+    return jsonify({"message": "User Profile updated successfully"})
 
 
 @app.route('/login', methods=['POST'])
@@ -273,13 +296,15 @@ def getStates(current_user):
 @app.route("/districts", methods=['GET'])
 @token_required
 def getDistricts(current_user):
+    args = request.args
+    state = args.get("state_name")
     CropProduction = pd.read_csv(
         "./data/CropProductionMinified.csv")
     CropProduction = CropProduction[CropProduction['Production'] > 0].reset_index(
         drop=True)
 
     district_category = dict(
-        enumerate(CropProduction['District_Name'].astype('category').cat.categories))
+        enumerate(CropProduction[CropProduction['State_Name'] == state]['District_Name'].astype('category').cat.categories))
     return jsonify(district_category)
 
 
