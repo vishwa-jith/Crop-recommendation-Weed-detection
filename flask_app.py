@@ -116,7 +116,7 @@ def login():
 
         return make_response(jsonify({"message": "Login Sucessful", 'token': token.decode("UTF-8")}), 201)
     return make_response(
-        jsonify({"message": "Login Failed"}),
+        jsonify({"message": "Wrong username or password"}),
         403,
         {'WWW-Authenticate': 'Basic realm ="Wrong Password !!"'}
     )
@@ -141,9 +141,9 @@ def signup():
         db.session.add(user)
         db.session.commit()
 
-        return make_response(jsonify({"message": "Sucessfully Registered"}), 201)
+        return make_response(jsonify({"success": True, "message": "Sucessfully Registered"}), 201)
     else:
-        return make_response(jsonify({"message": 'User already exists. Please Log in'}), 202)
+        return make_response(jsonify({"success": False, "message": 'User already exists. Please Log in'}), 202)
 
 
 @app.route("/A1/recommendCrop", methods=['GET'])
