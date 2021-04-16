@@ -342,5 +342,14 @@ def getSoils(current_user):
     return jsonify(soil_category)
 
 
+@app.route("/weather", methods=['GET'])
+@token_required
+def getWeather(current_user):
+    args = request.args
+    district = args.get("district_name")
+    weather = np.array(weatherApi.getWeather(district))
+    return jsonify({"temperature": weather[0], "humidity": weather[1], "rainfall": weather[2]})
+
+
 if __name__ == "__main__":
     app.run(debug=True)
