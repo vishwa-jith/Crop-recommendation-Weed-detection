@@ -32,6 +32,7 @@ class User(db.Model):
     district_name = db.Column(db.String(50))
     area = db.Column(db.Integer)
     soil_type = db.Column(db.String(60))
+    mobile = db.Column(db.String(60))
 
 
 def token_required(f):
@@ -63,7 +64,7 @@ def token_required(f):
 @app.route('/user', methods=['GET'])
 @token_required
 def getUserProfile(current_user):
-    return jsonify({"username": current_user.username, "password": current_user.password, "full_name": current_user.full_name, "state_name": current_user.state_name, "district_name": current_user.district_name, "area": current_user.area, "soil_type": current_user.soil_type})
+    return jsonify({"username": current_user.username, "password": current_user.password, "full_name": current_user.full_name, "state_name": current_user.state_name, "district_name": current_user.district_name, "area": current_user.area, "soil_type": current_user.soil_type, "mobile": current_user.mobile})
 
 
 @app.route('/user/update', methods=['PUT'])
@@ -77,13 +78,13 @@ def updateUserProfile(current_user):
         if not userUsername:
             user.username = updateUser.get('username')
         else:
-            return jsonify({"message": "Username already taken."})
-    user.password = updateUser.get('password')
+            return make_response(jsonify({"message": "Username already taken."}), 400)
     user.full_name = updateUser.get('full_name')
     user.state_name = updateUser.get('state_name')
     user.district_name = updateUser.get('district_name')
     user.area = updateUser.get('area')
     user.soil_type = updateUser.get('soil_type')
+    user.mobile = updateUser.get('mobile')
     db.session.commit()
     return jsonify({"message": "User Profile updated successfully"})
 
