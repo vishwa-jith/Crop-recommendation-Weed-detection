@@ -10,6 +10,9 @@ from tqdm import tqdm
 import json
 import warnings
 import pickle
+import base64
+from PIL import Image
+from io import BytesIO
 warnings.filterwarnings('ignore')
 
 
@@ -33,14 +36,6 @@ def getSeason():
                 season = key
                 break
     return season
-
-
-model_path = './notebooks/weed Detection/Models/RCNN_crop_weed_classification_model.h5'
-svm_model_path = './notebooks/weed Detection/Models/svm_classifier.pkl'
-model = tf.keras.models.load_model(model_path)
-model_without_last_two_fc = tf.keras.models.Model(
-    model.inputs, model.layers[-5].output)
-svm_model = loadpickles(svm_model_path)
 
 
 def iou_calc(bb1, bb2):
@@ -77,16 +72,31 @@ def iou_calc(bb1, bb2):
     return iou
 
 
+def readb64(base64_string):
+    sbuf = BytesIO()
+    sbuf.write(base64.b64decode(base64_string))
+    pimg = Image.open(sbuf)
+    return cv2.cvtColor(np.array(pimg), cv2.COLOR_RGB2BGR)
+
+
 def detection(img_path, confidence=0.9, iou_thresh=0.1):
 
+    model_path = './notebooks/weed Detection/Models/RCNN_crop_weed_classification_model1.h5'
+    svm_model_path = './notebooks/weed Detection/Models/svm_classifier.pkl'
+    model = tf.keras.models.load_model(model_path)
+    model_without_last_two_fc = tf.keras.models.Model(
+        model.inputs, model.layers[-5].output)
+    svm_model = loadpickles(svm_model_path)
+
     # appling selective search
-    img = plt.imread(img_path)
+    img = readb64(img_path)
+    # img = plt.imread(img_path)
     cv2.setUseOptimized(True)
     ss = cv2.ximgproc.segmentation.createSelectiveSearchSegmentation()
     ss.setBaseImage(img)
     ss.switchToSelectiveSearchFast()
     rects = ss.process()
-    sel_rects = rects[:2000]
+    sel_rects = rects[:50]
 
     pred_crop = []
     pred_weed = []
@@ -201,6 +211,8 @@ def detection(img_path, confidence=0.9, iou_thresh=0.1):
         cv2.putText(imOut, cls+':'+str(round(score*100, 2)), (x, y-8),
                     cv2.FONT_HERSHEY_SIMPLEX, 1, color, 2, cv2.LINE_AA)
     plt.imshow(imOut)
+    im_bytes = imOut.tobytes()
+    im_b64 = base64.b64encode(im_bytes)
     cv2.imwrite('prediction.jpeg', imOut)
 
     return final

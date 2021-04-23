@@ -1,3 +1,4 @@
+import json
 from flask import Flask, request, jsonify, make_response
 from flask_sqlalchemy import SQLAlchemy
 import uuid
@@ -9,7 +10,6 @@ from functools import wraps
 import numpy as np
 import pandas as pd
 from flask_cors import CORS, cross_origin
-
 
 from api import weatherApi
 from utils import utils
@@ -148,7 +148,8 @@ def signup():
 
 
 @app.route("/A1/recommendCrop", methods=['GET'])
-def recommendCrop1():
+@token_required
+def recommendCrop1(current_user):
     district = request.args.get("district")
     weather = np.array(weatherApi.getWeather(district)).reshape(1, -1)
     cropRecommendationApproach1 = utils.loadpickles(
@@ -158,7 +159,8 @@ def recommendCrop1():
 
 
 @app.route("/A1/recommendNPK", methods=['POST'])
-def recommendNPK():
+@token_required
+def recommendNPK(current_user):
     NPKPrediction = pd.read_csv(
         "./preprocessedData/CropRecommentationApproach2.csv")
     NPKPrediction = NPKPrediction[NPKPrediction['N'] > 0 &
@@ -190,7 +192,8 @@ def recommendNPK():
 
 
 @app.route("/A1/recommendFertilizer", methods=['POST'])
-def recommendFertilizer():
+@token_required
+def recommendFertilizer(current_user):
     data = request.json
 
     NPKPrediction = pd.read_csv(
@@ -220,7 +223,8 @@ def recommendFertilizer():
 
 
 @app.route("/A2/recommendCrop", methods=['POST'])
-def recommendCrop2():
+@token_required
+def recommendCrop2(current_user):
     data = request.json
 
     nitrogen = data.get('nitrogen')
@@ -238,7 +242,8 @@ def recommendCrop2():
 
 
 @app.route("/recommendCropYield", methods=['POST'])
-def recommendCropYield():
+@token_required
+def recommendCropYield(current_user):
     data = request.json
     crop = data.get('crop')
     area = data.get('area')
@@ -281,6 +286,16 @@ def recommendCropYield():
     return jsonify({"yield": crop_yield[0]})
 
 
+@app.route("/weedDetection", methods=['POST'])
+def weedDetection():
+    data = request.json
+    imageURI = data.get('imageURI')
+    pred_output = utils.detection(imageURI)
+    print(type(pred_output), pred_output)
+    print(json.dumps(pred_output))
+    return jsonify({"output": json.dumps([1, 3, 5])})
+
+
 @app.route("/states", methods=['GET'])
 @token_required
 def getStates(current_user):
@@ -299,6 +314,7 @@ def getStates(current_user):
 def getDistricts(current_user):
     args = request.args
     state = args.get("state_name")
+    print(state)
     CropProduction = pd.read_csv(
         "./data/CropProductionMinified.csv")
     CropProduction = CropProduction[CropProduction['Production'] > 0].reset_index(
@@ -322,7 +338,8 @@ def getCrops():
 
 
 @app.route("/seasons", methods=['GET'])
-def getSeasons():
+@token_required
+def getSeasons(current_user):
     CropProduction = pd.read_csv(
         "./data/CropProductionMinified.csv")
     CropProduction = CropProduction[CropProduction['Production'] > 0].reset_index(
