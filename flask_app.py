@@ -1,5 +1,5 @@
 import json
-from flask import Flask, request, jsonify, make_response
+from flask import Flask, request, Response, jsonify, make_response
 from flask_sqlalchemy import SQLAlchemy
 import uuid
 from numpy.core.numeric import full
@@ -291,9 +291,8 @@ def weedDetection():
     data = request.json
     imageURI = data.get('imageURI')
     pred_output = utils.detection(imageURI)
-    print(type(pred_output), pred_output)
-    print(json.dumps(pred_output))
-    return jsonify({"output": json.dumps([1, 3, 5])})
+    pred_output = list(map(utils.convertToList, pred_output))
+    return Response(json.dumps(pred_output),  mimetype='application/json')
 
 
 @app.route("/states", methods=['GET'])
@@ -377,4 +376,4 @@ def getSeasonbyMonth(current_user):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True,host="0.0.0.0")

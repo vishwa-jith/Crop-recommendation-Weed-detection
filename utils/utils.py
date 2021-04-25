@@ -216,3 +216,10 @@ def detection(img_path, confidence=0.9, iou_thresh=0.1):
     cv2.imwrite('prediction.jpeg', imOut)
 
     return final
+
+
+def convertToList(output):
+    output[0] = list(map(int, output[0]))
+    output[1] = float(output[1])
+    output[2] = str(output[2])
+    return output
