@@ -369,5 +369,12 @@ def getWeather(current_user):
     return jsonify({"temperature": weather[0], "humidity": weather[1], "rainfall": weather[2]})
 
 
+@app.route("/getSeasonbyMonth", methods=['GET'])
+@token_required
+def getSeasonbyMonth(current_user):
+    season = utils.getSeason()
+    return jsonify(season)
+
+
 if __name__ == "__main__":
     app.run(debug=True)

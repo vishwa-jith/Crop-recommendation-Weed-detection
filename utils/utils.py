@@ -32,7 +32,7 @@ def getSeason():
     season = ""
     for key, value in seasons.items():
         for val in value:
-            if(val == month):
+            if(val == str(int(month))):
                 season = key
                 break
     return season
