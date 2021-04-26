@@ -11,6 +11,5 @@ requests==2.25.1
 Flask==1.1.2
 geocoder==1.38.1
 Werkzeug==1.0.1
-pandas==1.2.2
 PyJWT==1.7.1
 gunicorn==20.1.0
