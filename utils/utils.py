@@ -213,7 +213,7 @@ def detection(img_path, confidence=0.9, iou_thresh=0.1):
     plt.imshow(imOut)
     im_bytes = imOut.tobytes()
     im_b64 = base64.b64encode(im_bytes)
-    cv2.imwrite('prediction.jpeg', imOut)
+    # cv2.imwrite('prediction.jpeg', imOut)
 
     return final
 
