@@ -51,39 +51,39 @@ To predict the most suitable crop, we use two different approaches,
 
 **Step 2**:
 
-**Process** - Predict the ideal NPK values based on environmental factors and previously predicted crop.
-**Algorithm** - Gradient Boosting Regressor
-**Reason** - GBR uses weak learners as classifiers, and they learn from their previous mistakes.
+**Process** - Predict the ideal NPK values based on environmental factors and previously predicted crop.  
+**Algorithm** - Gradient Boosting Regressor  
+**Reason** - GBR uses weak learners as classifiers, and they learn from their previous mistakes.  
 
 **Step 3**:
 
-**Process** - Recommend a fertilizer based on the environmental factors, soil type and crop type.
-**Algorithm** - Support Vector Machines
-**Reason** - SVM will have higher accuracy when we have many features(high dimensional spaces).
-**Accuracy Score** F- 97.5%
+**Process** - Recommend a fertilizer based on the environmental factors, soil type and crop type.  
+**Algorithm** - Support Vector Machines  
+**Reason** - SVM will have higher accuracy when we have many features(high dimensional spaces).  
+**Accuracy Score** F- 97.5%  
 
 ### CROP RECOMMENDATION Approach 2
 
 **Step 1**:
 
-Collect the NPK values from the farmer.
+Collect the NPK values from the farmer.  
 
 **Step 2**:
 
-**Process** - Predict a best suitable crop based on the NPK values and environmental factors(temperature, humidity, rainfall).
-**Algorithm** - Random Forest
-**Reason** - Random Forest uses ensemble approach, so it has a very good accuracy compared to other algorithms.
-**Accuracy Score** - 98.33%
+**Process** - Predict a best suitable crop based on the NPK values and environmental factors(temperature, humidity, rainfall).  
+**Algorithm** - Random Forest  
+**Reason** - Random Forest uses ensemble approach, so it has a very good accuracy compared to other algorithms.  
+**Accuracy Score** - 98.33%  
 
 ## CROP YIELD / PRODUCTION
 
-❖ We also predict the **amount of crop** that the farmer can cultivate, this prediction is based on the **farmer’s location, seasonal changes, crop type and the amount of area** used for cultivation.
+❖ We also predict the **amount of crop** that the farmer can cultivate, this prediction is based on the **farmer’s location, seasonal changes, crop type and the amount of area** used for cultivation.  
 
-❖ This prediction would help to take fair and **correct decisions** which would make their **yield more productive**.
+❖ This prediction would help to take fair and **correct decisions** which would make their **yield more productive**.  
 
-❖ So based on this the farmer can decide whether to go ahead with the chosen crop or to choose a different crop.
+❖ So based on this the farmer can decide whether to go ahead with the chosen crop or to choose a different crop.  
 
-❖ And here we use **SGD - Stochastic Gradient Descent Algorithm** to predict the value of **crop yield** and this regression analysis is based on **crop** **type**, **location**, **area**and **season**.
+❖ And here we use **SGD - Stochastic Gradient Descent Algorithm** to predict the value of **crop yield** and this regression analysis is based on **crop** **type**, **location**, **area**and **season**.  
 
 ## CROP - WEED DETECTION
 
