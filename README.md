@@ -106,7 +106,7 @@ flask_app.py
 deactivate env
 ```
 
-Vist http://localhost:5000 or http://0.0.0.0:5000 or http://yourIp:5000
+Visit http://localhost:5000 or http://0.0.0.0:5000 or http://yourIp:5000
 
 ## Access Permissions Required
 
