@@ -12,7 +12,7 @@
 
 ### Application Demo
 
-![alt text](https://github.com/SureshKrishnaaR/Crop-Recommendation-Weed-Detection-Frontend/blob/master/DESKTOPUI.gif?raw=true)
+![alt text](https://github.com/vishwa-jith/Crop-recommendation-Weed-detection/blob/master/docs/DESKTOPUI.gif?raw=true)
 
 ## MOBILE INTERFACE
 
@@ -24,7 +24,7 @@
 
 ### Application Demo
 
-![alt text](https://github.com/SureshKrishnaaR/Crop-Recommendation-Weed-Detection-Frontend/blob/master/MOBILEUI.gif?raw=true)
+![alt text](https://github.com/vishwa-jith/Crop-recommendation-Weed-detection/blob/master/docs/MOBILEUI.gif?raw=true)
 
 ## Dataset Collections
 
@@ -244,6 +244,12 @@ Collect the NPK values from the farmer.
 ❖ In this project, we use OpenCV image processing techniques which does the following operations,
 
 ❖ Then we use a deep learning model, which has multiple layers to progressively extract high-level features from the input image, and using these features crop-weed classification is carried out.
+
+## Architecture
+
+![alt text](https://github.com/vishwa-jith/Crop-recommendation-Weed-detection/blob/master/docs/flow-img1.png?raw=true)
+
+![alt text](https://github.com/vishwa-jith/Crop-recommendation-Weed-detection/blob/master/docs/flow-img2.png?raw=true)
 
 ## References
 
