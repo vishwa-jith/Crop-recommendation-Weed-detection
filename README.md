@@ -1,5 +1,157 @@
 # AGRI ASSISTANCE: An intelligent Machine Learning approach towards Crop Recommendation and Weed Detection
 
+## Visit https://github.com/SureshKrishnaaR/Crop-Recommendation-Weed-Detection-Frontend for Frontend
+
+## DESKTOP INTERFACE
+
+### Requirements
+
+❖ Browser - Chrome/Opera/Safari/Edge  
+❖ Camera  
+❖ Browser Navigator (Location Access)
+
+### Application Demo
+
+![alt text](https://github.com/SureshKrishnaaR/Crop-Recommendation-Weed-Detection-Frontend/blob/master/DESKTOPUI.gif?raw=true)
+
+## MOBILE INTERFACE
+
+### Requirements
+
+❖ Browser - Chrome/Opera/Safari/Edge  
+❖ Camera  
+❖ Browser Navigator (Location Access)
+
+### Application Demo
+
+![alt text](https://github.com/SureshKrishnaaR/Crop-Recommendation-Weed-Detection-Frontend/blob/master/MOBILEUI.gif?raw=true)
+
+## Dataset Collections
+
+| <b>Discipline             | <b> Dataset Link                                                                          |
+| :------------------------ | :---------------------------------------------------------------------------------------- |
+| <b> Crop Recommendation   | <b> https://www.kaggle.com/atharvaingle/crop-recommendation-dataset                       |
+| <b> Crop Yield            | <b> https://www.kaggle.com/ananysharma/crop-yield                                         |
+| <b> Fertilizer Prediction | <b> https://www.kaggle.com/gdabhishek/fertilizer-prediction                               |
+| <b> Weed Detection        | <b> https://www.kaggle.com/ravirajsinh45/crop-and-weed-detection-data-with-bounding-boxes |
+
+## 3rd Party API's
+
+### Weather API
+
+Real-time or current JSON weather and XML weather API provides access to near real-time weather information for millions of locations worldwide.
+
+Use below link to access API via API key.  
+https://www.weatherapi.com/
+
+## Steps to start the Application (Backend)
+
+```
+git clone https://github.com/SureshKrishnaaR/Crop-Recommendation-Weed-Detection-Frontend.git
+```
+
+**Creating and Activating Virtual Environment**
+
+```
+pip install virtualenv
+
+# or
+
+pip install venv
+```
+
+**Setup Virtual Environment**
+
+```
+python -m venv env
+```
+
+**Activate Virtual Environment**
+
+```
+# activate env (windows)
+
+.\env\scripts\activate
+
+# activate env (Linux/Mac)
+
+source venv/bin/activate
+
+```
+
+**Installing Dependencies**
+
+```
+pip install -r requirements.txt
+```
+
+**Creating database DB (SQLite)**
+
+```
+py do_clean.py
+
+# or
+
+python do_clean.py
+
+```
+
+**Starting Application**
+
+```
+flask_app.py
+
+```
+
+**Deactivating Virtual Environment**
+
+```
+deactivate env
+```
+
+Vist http://localhost:5000 or http://0.0.0.0:5000 or http://yourIp:5000
+
+## Access Permissions Required
+
+No, permissions required
+
+## Tools and Technologies Used
+
+Code Editor - VS Code  
+Analytical IDE - Jupyter Notebook  
+Continous Integration - GitHub  
+Deployment - Heroku
+
+## Software Requirements
+
+❖ python @3.8 (only acceptable till 3.8 --version)  
+❖ Nodejs  
+❖ npm (Node Package Manager)  
+❖ Git Bash
+
+## Other Requirements
+
+❖ virtualenv (python)  
+❖ create-react-app (npm)
+
+## Dependencies
+
+matplotlib==3.3.4  
+numpy==1.19.5  
+opencv-python==4.5.1.48  
+pandas  
+seaborn==0.11.1  
+sklearn==0.0  
+tensorflow==2.4.1  
+tqdm==4.57.0  
+Flask_SQLAlchemy==2.4.4  
+requests==2.25.1  
+Flask==1.1.2  
+geocoder==1.38.1  
+Werkzeug==1.0.1  
+PyJWT==1.7.1  
+gunicorn==20.1.0
+
 ## Objective
 
 ❖ It is very essential for the farmers to choose a crop that best suits the land being used for cultivation. Farmers should get benefited by cultivating the **best fitting crops** rather than cultivating unsuitable crops.
@@ -53,37 +205,37 @@ To predict the most suitable crop, we use two different approaches,
 
 **Process** - Predict the ideal NPK values based on environmental factors and previously predicted crop.  
 **Algorithm** - Gradient Boosting Regressor  
-**Reason** - GBR uses weak learners as classifiers, and they learn from their previous mistakes.  
+**Reason** - GBR uses weak learners as classifiers, and they learn from their previous mistakes.
 
 **Step 3**:
 
 **Process** - Recommend a fertilizer based on the environmental factors, soil type and crop type.  
 **Algorithm** - Support Vector Machines  
 **Reason** - SVM will have higher accuracy when we have many features(high dimensional spaces).  
-**Accuracy Score** F- 97.5%  
+**Accuracy Score** F- 97.5%
 
 ### CROP RECOMMENDATION Approach 2
 
 **Step 1**:
 
-Collect the NPK values from the farmer.  
+Collect the NPK values from the farmer.
 
 **Step 2**:
 
 **Process** - Predict a best suitable crop based on the NPK values and environmental factors(temperature, humidity, rainfall).  
 **Algorithm** - Random Forest  
 **Reason** - Random Forest uses ensemble approach, so it has a very good accuracy compared to other algorithms.  
-**Accuracy Score** - 98.33%  
+**Accuracy Score** - 98.33%
 
 ## CROP YIELD / PRODUCTION
 
-❖ We also predict the **amount of crop** that the farmer can cultivate, this prediction is based on the **farmer’s location, seasonal changes, crop type and the amount of area** used for cultivation.  
+❖ We also predict the **amount of crop** that the farmer can cultivate, this prediction is based on the **farmer’s location, seasonal changes, crop type and the amount of area** used for cultivation.
 
-❖ This prediction would help to take fair and **correct decisions** which would make their **yield more productive**.  
+❖ This prediction would help to take fair and **correct decisions** which would make their **yield more productive**.
 
-❖ So based on this the farmer can decide whether to go ahead with the chosen crop or to choose a different crop.  
+❖ So based on this the farmer can decide whether to go ahead with the chosen crop or to choose a different crop.
 
-❖ And here we use **SGD - Stochastic Gradient Descent Algorithm** to predict the value of **crop yield** and this regression analysis is based on **crop** **type**, **location**, **area**and **season**.  
+❖ And here we use **SGD - Stochastic Gradient Descent Algorithm** to predict the value of **crop yield** and this regression analysis is based on **crop** **type**, **location**, **area**and **season**.
 
 ## CROP - WEED DETECTION
 
@@ -106,3 +258,17 @@ Collect the NPK values from the farmer.
 [5] R.Anirudh Reddy, G.Laasya, T.Sowmya, P.Sindhuja, Mudasar Basha, “Image Processing For Weed Detection”, International Journal of Engineering Technology, Management and Applied Sciences, April 2017, Volume 5, Issue 4, ISSN 2349-4476.
 
 [6] Rohit Kumar Rajak, Ankit Pawar, Mitalee Pendke, Pooja Shinde, Suresh Rathod, Avinash Devare, ”Crop Recommendation System to Maximize Crop Yield using Machine Learning Technique”, International Research Journal of Engineering and Technology (IRJET), Volume: 04 Issue: 12 | Dec-2017.
+
+## Developer Information
+
+| <b>Name of Developer | <b> Suresh Krishnaa R        |
+| :------------------- | :--------------------------- |
+| <b> Institute        | <b> Sri Sairam Engineering   |
+| <b> Email id         | <b> shyrams1346@gmail.com    |
+| <b> Department       | Computer Science Engineering |
+
+| <b>Name of Developer | <b> Vishwajith V             |
+| :------------------- | :--------------------------- |
+| <b> Institute        | <b> Sri Sairam Engineering   |
+| <b> Email id         | <b> vishwajith567@gmail.com  |
+| <b> Department       | Computer Science Engineering |
