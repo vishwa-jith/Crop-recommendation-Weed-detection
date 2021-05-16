@@ -47,7 +47,7 @@ https://www.weatherapi.com/
 ## Steps to start the Application (Backend)
 
 ```
-git clone https://github.com/SureshKrishnaaR/Crop-Recommendation-Weed-Detection-Frontend.git
+git clone https://github.com/SureshKrishnaaR/Crop-Recommendation-Weed-Detection.git
 ```
 
 **Creating and Activating Virtual Environment**
@@ -75,8 +75,7 @@ python -m venv env
 
 # activate env (Linux/Mac)
 
-source venv/bin/activate
-
+source env/bin/activate
 ```
 
 **Installing Dependencies**
@@ -93,14 +92,12 @@ py do_clean.py
 # or
 
 python do_clean.py
-
 ```
 
 **Starting Application**
 
 ```
 flask_app.py
-
 ```
 
 **Deactivating Virtual Environment**
@@ -113,7 +110,7 @@ Vist http://localhost:5000 or http://0.0.0.0:5000 or http://yourIp:5000
 
 ## Access Permissions Required
 
-No, permissions required
+No permissions required
 
 ## Tools and Technologies Used
 
@@ -212,9 +209,11 @@ To predict the most suitable crop, we use two different approaches,
 **Process** - Recommend a fertilizer based on the environmental factors, soil type and crop type.  
 **Algorithm** - Support Vector Machines  
 **Reason** - SVM will have higher accuracy when we have many features(high dimensional spaces).  
-**Accuracy Score** F- 97.5%
+**Accuracy Score** - 97.5%
 
-### CROP RECOMMENDATION Approach 2
+### CROP RECOMMENDATION
+
+**Approach 2**
 
 **Step 1**:
 
@@ -267,14 +266,14 @@ Collect the NPK values from the farmer.
 
 ## Developer Information
 
-| <b>Name of Developer | <b> Vishwajith V             |
-| :------------------- | :--------------------------- |
-| <b> Institute        | <b> Sri Sairam Engineering   |
-| <b> Email id         | <b> vishwajith567@gmail.com  |
-| <b> Department       | Computer Science Engineering |
+| <b>Name of Developer | <b> Vishwajith V                   |
+| :------------------- | :--------------------------------- |
+| <b> Institute        | <b> Sri Sairam Engineering College |
+| <b> Email id         | <b> vishwajith567@gmail.com        |
+| <b> Department       | Computer Science Engineering       |
 
-| <b>Name of Developer | <b> Suresh Krishnaa R        |
-| :------------------- | :--------------------------- |
-| <b> Institute        | <b> Sri Sairam Engineering   |
-| <b> Email id         | <b> shyrams1346@gmail.com    |
-| <b> Department       | Computer Science Engineering |
+| <b>Name of Developer | <b> Suresh Krishnaa R              |
+| :------------------- | :--------------------------------- |
+| <b> Institute        | <b> Sri Sairam Engineering College |
+| <b> Email id         | <b> shyrams1346@gmail.com          |
+| <b> Department       | Computer Science Engineering       |
