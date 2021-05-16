@@ -96,7 +96,7 @@ def detection(img_path, confidence=0.9, iou_thresh=0.1):
     ss.setBaseImage(img)
     ss.switchToSelectiveSearchFast()
     rects = ss.process()
-    sel_rects = rects[:50]
+    sel_rects = rects[:300]
 
     pred_crop = []
     pred_weed = []
