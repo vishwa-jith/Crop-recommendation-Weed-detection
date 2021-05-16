@@ -119,12 +119,12 @@ No, permissions required
 
 Code Editor - VS Code  
 Analytical IDE - Jupyter Notebook  
-Continous Integration - GitHub  
+Continuous Integration - GitHub  
 Deployment - Heroku
 
 ## Software Requirements
 
-❖ python @3.8 (only acceptable till 3.8 --version)  
+❖ Python @3.8 (only acceptable till 3.8 --version)  
 ❖ Nodejs  
 ❖ npm (Node Package Manager)  
 ❖ Git Bash
@@ -267,14 +267,14 @@ Collect the NPK values from the farmer.
 
 ## Developer Information
 
-| <b>Name of Developer | <b> Suresh Krishnaa R        |
-| :------------------- | :--------------------------- |
-| <b> Institute        | <b> Sri Sairam Engineering   |
-| <b> Email id         | <b> shyrams1346@gmail.com    |
-| <b> Department       | Computer Science Engineering |
-
 | <b>Name of Developer | <b> Vishwajith V             |
 | :------------------- | :--------------------------- |
 | <b> Institute        | <b> Sri Sairam Engineering   |
 | <b> Email id         | <b> vishwajith567@gmail.com  |
+| <b> Department       | Computer Science Engineering |
+
+| <b>Name of Developer | <b> Suresh Krishnaa R        |
+| :------------------- | :--------------------------- |
+| <b> Institute        | <b> Sri Sairam Engineering   |
+| <b> Email id         | <b> shyrams1346@gmail.com    |
 | <b> Department       | Computer Science Engineering |
