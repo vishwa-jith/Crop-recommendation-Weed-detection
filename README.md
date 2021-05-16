@@ -47,7 +47,7 @@ https://www.weatherapi.com/
 ## Steps to start the Application (Backend)
 
 ```
-git clone https://github.com/SureshKrishnaaR/Crop-Recommendation-Weed-Detection.git
+git clone https://github.com/vishwa-jith/Crop-recommendation-Weed-detection.git
 ```
 
 **Creating and Activating Virtual Environment**
